@@ -2,28 +2,42 @@
 """
 Created on Tue May  8 10:37:33 2018
 
-@author: 202-22
+@author: kimi
 """
+# Import libraries & funtions
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import scipy as sp
+import matplotlib
+import sklearn
 
-from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 
-import matplotlib.pyplot as plt
 
+# Load dataset
+from sklearn.datasets import load_breast_cancer
 cancer = load_breast_cancer()
+
+
+# EDA
 print("cancer.keys(): \n{}".format(cancer.keys()))
-print("유방암 데이터의 형태: {}".format(cancer.data.shape))  #569 x 30
+print("shape of cancer data: {}".format(cancer.data.shape))  # 569 rows x 30 columns
 
 cancer.feature_names
 print("feature_names:{}".format(cancer['feature_names']))
 print("target_names:{}".format(cancer['target_names']))
 
+
+# Training/Testing data separation 
 X_train, X_test, y_train, y_test = train_test_split(cancer['data'],
                                                     cancer['target'],
                                                     test_size=0.3,
                                                     random_state=77)
 
+
+# Modeling and Model evaluation
 training_accuracy=[]
 test_accuracy = []
 neighbors_settings = range(1,11)
@@ -45,6 +59,7 @@ plt.ylabel("Accuracy")
 plt.legend()
 
 
+
 import mglearn
 %matplotlib inline
 
@@ -58,7 +73,6 @@ reg = KNeighborsRegressor(n_neighbors=3)
 reg.fit(X_train, y_train)
 reg.predict(X_test)
 reg.score(X_test, y_test)
-
 
 
 plt.scatter(neighbors_settings, training_accuracy, c = "g", alpha = 0.2, label = "")
