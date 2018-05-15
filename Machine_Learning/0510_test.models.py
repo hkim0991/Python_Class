@@ -130,7 +130,7 @@ type(array)
 X=array[:, 0:4]
 Y=array[:, 4]
 
-validation_size = 0.10 # 평가용 데이터 셋 비율
+validation_size = 0.10 # valid data partition
 seed = 7
 X_train, X_test, y_train, y_test = model_selection.train_test_split(X, Y,
  test_size=validation_size, random_state=seed)
@@ -145,12 +145,12 @@ models
 
 
 scoring = 'accuracy'
-results = [] # 결과
-names = [] # 모델 이름
+results = [] # cv results
+names = [] # model names
 seed = 7
 for name, model in models:  # models = [name of model, model function]
    kfold = model_selection.KFold(n_splits=10, random_state=seed)
-   cv_results = model_selection.cross_val_score(model, X_test, y_test, cv=kfold, scoring=scoring) # 교차검증
+   cv_results = model_selection.cross_val_score(model, X_test, y_test, cv=kfold, scoring=scoring) # cross validation
    results.append(cv_results)
    names.append(name)
    msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
