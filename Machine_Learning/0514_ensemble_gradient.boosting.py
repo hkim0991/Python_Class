@@ -4,20 +4,21 @@ Created on Mon May 14 12:12:29 2018
 
 @author: kimi
 """
-# Import libraries & funtions
+
+# Import libraries & funtions -------------------------------------------------
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import numpy as np
 %matplotlib inline
 
 
-# Load dataset
+# Load dataset ----------------------------------------------------------------
 from sklearn.datasets import load_breast_cancer
 cancer = load_breast_cancer()
 cancer.data
 
 
-# Create a funtion 
+# Create a funtion ------------------------------------------------------------
 def plot_feature_importances_cancer(model):
     n_features = cancer.data.shape[1]
     plt.barh(range(n_features), model.feature_importances_, align='center')
@@ -27,7 +28,7 @@ def plot_feature_importances_cancer(model):
     plt.ylim(-1, n_features)
 
 
-# Training/Testing data separation + modeling with DecisionTreeClassifier
+# Training/Testing data separation -------------------------------------------- 
 from sklearn.ensemble import GradientBoostingClassifier
 X_train, X_test, y_train, y_test = train_test_split(cancer.data, 
                                                     cancer.target, 
@@ -35,17 +36,19 @@ X_train, X_test, y_train, y_test = train_test_split(cancer.data,
                                                     random_state=0)
 
 
-# modeling - basic model 
+# modeling - basic model ------------------------------------------------------
 gbrt = GradientBoostingClassifier(random_state=0)
 gbrt.fit(X_train, y_train)
 
 print("accuracy with the train dataset: {:.3f}".format(gbrt.score(X_train, y_train))) # 1.000
 print("accuracy with the test dataset: {:.3f}".format(gbrt.score(X_test, y_test)))    # 0.977
 
-## we observe an overftting issue here. How can we handing that ? 
-
-
-# Handing overfitting issue 1 - max_depth adjustment
+ 
+# -----------------------------------------------------------------------------
+#             Question: # How can we handle an overftting issue ?  
+# -----------------------------------------------------------------------------
+ 
+# Handing overfitting issue 1 - max_depth adjustment --------------------------
 gbrt1 = GradientBoostingClassifier(random_state=0, max_depth=1)
 gbrt1.fit(X_train, y_train)
 
@@ -53,7 +56,7 @@ print("accuracy with the train dataset: {:.3f}".format(gbrt1.score(X_train, y_tr
 print("accuracy with the test dataset: {:.3f}".format(gbrt1.score(X_test, y_test)))     # 0.953
 
 
-# Handing overfitting issue 2 - learning_rate adjustment
+# Handing overfitting issue 2 - learning_rate adjustment ----------------------
 gbrt2 = GradientBoostingClassifier(random_state=0, learning_rate=0.01)
 gbrt2.fit(X_train, y_train)
 
@@ -61,7 +64,7 @@ print("accuracy with the train dataset: {:.3f}".format(gbrt2.score(X_train, y_tr
 print("accuracy with the test dataset: {:.3f}".format(gbrt2.score(X_test, y_test)))     # 0.959
 
 
-# check importance of features in each model
+# check importance of features in each model ----------------------------------
 plot_feature_importances_cancer(gbrt) # using all the features
 ## top3 features : worst concave points, worst area, mean concave points
 
@@ -74,7 +77,7 @@ plot_feature_importances_cancer(gbrt2) # using only few features
 ## With lower learning_rate, we can have better accuracy although we only use few features
  
 
-# find out the most highest accuracy for test dataset
+# find out the most highest accuracy for test dataset -------------------------
 cnt = 0
 l1 = []
 lni = []
@@ -102,12 +105,7 @@ plt.show()
 max(lnr)  
 ## the most highest accuracy for test dataset is : 0.994152046784 
 
-
-
-
-
-
-# draft----------------------------------
+# draft------------------------------------------------------------------------
 max(lni)
 [val, idx] = max(lnr)       
 lnr.index(max(lnr))
@@ -122,8 +120,6 @@ print("It's index is " + str(index) + ".")
 
 gbrt[237]
 acTest[237]
-
-
 
 
 max=0; numMax= 0; cnt= 0

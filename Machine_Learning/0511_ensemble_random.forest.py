@@ -2,7 +2,7 @@
 """
 Created on Fri May 11 10:41:27 2018
 
-@author: 202-22
+@author: kimi
 """
 
 
@@ -13,16 +13,16 @@ import os
 os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 
-# Import libraries & funtions
+# Decision Tree: Import libraries & funtions -------------------------------------------------
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 
 
-# Load dataset
+# Load dataset ----------------------------------------------------------------
 from sklearn.datasets import load_breast_cancer
 
 
-# Training/Testing data separation + modeling with DecisionTreeClassifier
+# Training/Testing data separation + modeling with DecisionTreeClassifier -----
 def testTreeModel(TestSize=0.3, treedepth=3, max_leaf=10):
     cancer = load_breast_cancer()
     X_train, X_test, y_train, y_test = train_test_split(cancer.data,
@@ -44,26 +44,24 @@ for i in range(1,11):
     testTreeModel(i/10, i)
 
 
-
-
-# Import libraries & funtions
+# Random Forest: Import libraries & funtions -------------------------------------------------
 from sklearn.ensemble import RandomForestClassifier
 
 
-# Load dataset
+# Load dataset ----------------------------------------------------------------
 from sklearn.datasets import make_moons
 
 X, y = make_moons(n_samples=100, noise=0.25, random_state=3)
 print(X.shape, y.shape)
 
 
-# Training/Testing data separation
+# Training/Testing data separation --------------------------------------------
 X_train, X_test, y_train, y_test = train_test_split(X, y, 
                                                     test_size=0.3,
                                                     random_state=77)
 
 
-# Modeling with RandomForestClassifier
+# Modeling with RandomForestClassifier ----------------------------------------
 forest = RandomForestClassifier(n_estimators=10, random_state=2)
 forest.fit(X_train, y_train)
 

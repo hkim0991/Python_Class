@@ -5,7 +5,7 @@ Created on Wed May  9 11:14:46 2018
 @author: kimi
 """
 
-# Import libraries & funtions
+# Import libraries & funtions -------------------------------------------------
 from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -14,7 +14,7 @@ from sklearn.linear_model import Ridge # Ridge regression model
 import matplotlib.pyplot as plt
 
 
-# Load dataset
+# Load dataset ----------------------------------------------------------------
 def load_extended_boston(): # adding more features from existing features
     boston = load_boston()
     X = boston.data
@@ -25,17 +25,17 @@ X, y = load_extended_boston()
 print(X.shape, y.shape)
 
 
-# Training/Testing data separation 
+# Training/Testing data separation --------------------------------------------
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
 
 
-# Modeling - LinearRegression model 
+# Modeling - LinearRegression model -------------------------------------------
 lr = LinearRegression().fit(X_train, y_train)
 print("score of the model with train data: {:.2f}".format(lr.score(X_train, y_train)))
 print("score of the model with test data: {:.2f}".format(lr.score(X_test, y_test)))
 
 
-# Modeling - Ridge Regression model - L2 regularization
+# Modeling - Ridge Regression model - L2 regularization -----------------------
 ridge1 = Ridge().fit(X_train, y_train) # alpha = 1.0 (default value)
 print("score of the model with train data: {:.2f}".format(ridge1.score(X_train, y_train)))
 print("score of the model with test data: {:.2f}".format(ridge1.score(X_test, y_test)))
@@ -56,7 +56,7 @@ print("score of the model with train data: {:.2f}".format(ridge100.score(X_train
 print("score of the model with train data: {:.2f}".format(ridge100.score(X_test, y_test)))
 
 
-## Compare coefficient between linear model and ridge(alpha=1) model
+# Compare coefficient between linear model and ridge(alpha=1) models ---------- 
 lr.coef_.mean()
 ridge1.coef_.mean()
 ridge100.coef_.mean()  # the bigger alpha is, the smaller coefficient is 

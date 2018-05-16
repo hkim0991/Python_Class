@@ -4,7 +4,7 @@ Created on Tue May  8 10:37:33 2018
 
 @author: kimi
 """
-# Import libraries & funtions
+# Import libraries & funtions -------------------------------------------------
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -16,12 +16,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 
 
-# Load dataset
+# Load dataset ----------------------------------------------------------------
 from sklearn.datasets import load_breast_cancer
 cancer = load_breast_cancer()
 
 
-# EDA
+# EDA -------------------------------------------------------------------------
 print("cancer.keys(): \n{}".format(cancer.keys()))
 print("shape of cancer data: {}".format(cancer.data.shape))  # 569 rows x 30 columns
 
@@ -30,14 +30,14 @@ print("feature_names:{}".format(cancer['feature_names']))
 print("target_names:{}".format(cancer['target_names']))
 
 
-# Training/Testing data separation 
+# Training/Testing data separation --------------------------------------------
 X_train, X_test, y_train, y_test = train_test_split(cancer['data'],
                                                     cancer['target'],
                                                     test_size=0.3,
                                                     random_state=77)
 
 
-# Modeling and Model evaluation
+# Modeling and Model evaluation -----------------------------------------------
 training_accuracy=[]
 test_accuracy = []
 neighbors_settings = range(1,11)
