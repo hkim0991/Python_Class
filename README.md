@@ -2,7 +2,7 @@
 
 
 
-### Machine Learning
+### 1. Machine Learning
 Following the book of Andreas Müller and Sarah Guido, Introduction to Machine Learning with Python, 
 I'm practicing a various Machine Learning models with Python.
 
