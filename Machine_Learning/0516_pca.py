@@ -58,13 +58,76 @@ for target in np.unique(people.target):
 
 X_people = people.data[mask]
 y_people = people.target[mask]
-print(X_people, y_people)
+print(X_people.shape, y_people.shape)
+
+X_people = X_people / 255 # normalization (maximum value - minimum value)
+X_people
 
 
+# Training/Testing data separation --------------------------------------------
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(X_people, y_people, 
+                                                    stratify=y_people, random_state=0)
+
+X_train.shape  # 1547 x 5655
 
 
+# Modeling 1 - KNeighborsClassifier ---------------------------------------------
+knn = KNeighborsClassifier(n_neighbors=1)
+knn.fit(X_train, y_train)
+
+print("accuracy with the train dataset: {:.3f}".format(knn.score(X_train, y_train))) # 1.00
+print("accuracy with the test dataset: {:.3f}".format(knn.score(X_test, y_test))) # 0.23
+
+import mglearn
+mglearn.plots.plot_pca_whitening()
 
 
+# Modeling 2.1 - PCA ------------------------------------------------------------
+from sklearn.decomposition import PCA
+pca = PCA(n_components=100, whiten=True, random_state=0).fit(X_train) # no y_train(unsupervised learning)
+
+X_train_pca = pca.transform(X_train)
+X_test_pca = pca.transform(X_test)
+
+print("X_train_pca.shape : {}".format(X_train_pca.shape)) # 1547 x 100
 
 
+# Modeling 2.2 - PCA -> KNN ---------------------------------------------------
+knn = KNeighborsClassifier(n_neighbors=1)
+knn.fit(X_train_pca, y_train)
+print("accuracy with the train dataset: {:.3f}".format(knn.score(X_test_pca, y_test))) #0.31
+
+print("pca.components_.shape : {}".format(pca.components_.shape)) # 100 x 5655
+
+pca.components_[0]
+
+fig, axes = plt.subplots(3,5, figsize=(15,12), 
+                         subplot_kw={'xticks' : (), 'yticks': ()})
+
+for i, (component, ax) in enumerate(zip(pca.components_, axes.ravel())):
+    ax.imshow(component.reshape(image_shape), cmap='viridis')
+    ax.set_title("PCA {}".format((i+1)))
+    
+    
+mglearn.plots.plot_pca_faces(X_train, X_test, image_shape)
+
+
+###############################################################################
+
+# zip function review
+a = ["1", "2", "3"]
+b = ["a", "b", "c"]
+for (a,b) in zip(a,b):
+    print(a,b)
+
+# enumerate function review
+a = ["1", "2", "3"]
+b = ["a", "b", "c"]
+for i, (a,b) in enumerate(zip(a,b)):
+    print(i, a, b)
+
+###############################################################################
 
