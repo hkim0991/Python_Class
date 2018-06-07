@@ -20,3 +20,8 @@ I'm practicing a various Machine Learning models with Python.
 [7-2. Clustering 2](Machine_Learning/0529_clustering.comparison.py) <br>
 [8-1. Gradient Descent 1](Machine_Learning/0604_gradient1.py) <br>
 [8-2. Gradient Descent 2](Machine_Learning/0605_gradient2.py) <br>
+
+### Others
+
+[1-1. pymongo 1](Others/0531_pyMongo.py)
+[1-2. pymongo 2](Others/0601_pyMongo.2.py.py)
